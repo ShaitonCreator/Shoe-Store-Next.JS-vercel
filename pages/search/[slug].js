@@ -13,7 +13,6 @@ const Search = () => {
   const [pageIndex, setPageIndex] = useState(1);
 
   const fetchingProducts = async () => {
-    console.log(query.slug);
     const { data } = await fetchDataFromApi(
       `/api/products?populate=*&[filters][name][$containsi]=${query.slug}&pagination[page]=1&pagination[pageSize]=${maxResult}`
     );
@@ -42,7 +41,7 @@ const Search = () => {
               </div>
             </div>
             {/* products grid start */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5 my-14 px-5 md:px-0 ">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-14 px-5 md:px-0 ">
               {data?.data?.map((item) => (
                 <ProductCard key={item.id} data={item} />
               ))}

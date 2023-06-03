@@ -12,18 +12,6 @@ export const fetchDataFromApi = async (endpoint) => {
   return data;
 };
 
-export const pushDataUsingApi = async (endpoint) => {
-  const options = {
-    method: "POST",
-    headers: {
-      Authorization: "Bearer " + apiToken,
-    },
-  };
-  const response = await fetch(`${apiUrl}${endpoint}`, options);
-  const data = await response.json();
-  return data;
-};
-
 export const makePaymentRequest = async (endpoint, payload) => {
   const res = await fetch(`${apiUrl}${endpoint}`, {
     method: "POST",

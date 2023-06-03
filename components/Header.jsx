@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Menu from "./Menu";
 import MenuMobile from "./MenuMobile";
 import Wrapper from "./Wrapper";
-import Search from "./Search";
+import { useRouter } from "next/router";
 
 // icons
 
@@ -17,12 +17,15 @@ import { fetchDataFromApi } from "@/utils/api";
 import { useSelector } from "react-redux";
 
 const Header = () => {
+  const router = useRouter();
+  // states
   const [mobileMenu, setMobileMenu] = useState(false);
   const [showCatMenu, setShowCatMenu] = useState(false);
   const [show, setShow] = useState("translate-y-0");
   const [lastScrollY, setLastScrollY] = useState(0);
   const [categories, setCategoreis] = useState(null);
   const [showSearch, setShowSearch] = useState(false);
+  const [input, setInput] = useState("");
 
   // getting cartItems from redux store
   const { cartItems } = useSelector((state) => state.cart);
@@ -39,6 +42,13 @@ const Header = () => {
       setShow("tranlate-y-0");
     }
     setLastScrollY(window.scrollY);
+  };
+
+  // search Input
+  const handleSearchInput = (event) => {
+    event.preventDefault();
+    console.log(input);
+    if (input) router.push(`/search/${input}`);
   };
 
   useEffect(() => {
@@ -63,7 +73,7 @@ const Header = () => {
       >
         <Wrapper className="h-[60px] flex justify-between items-center">
           <Link href={"/"}>
-            <img src="/logo.svg" alt="" className="w-[40px] md:w-[60px]" />
+            <img src="/logo.svg" alt="Logo" className="w-[40px] md:w-[60px]" />
           </Link>
           <Menu
             categories={categories}
@@ -92,11 +102,29 @@ const Header = () => {
             {/* Search icon start */}
             <div
               className="w-8 md:w-12 h-8 rounded-full flex justify-center items-center hover:bg-black/[0.05] cursor-pointer relative duration-500"
-              onClick={() => setShowSearch(!showSearch)}
+              onClick={(e) => {
+                setShowSearch((prev) => !prev);
+                handleSearchInput(e);
+              }}
             >
               <BsSearch className="text-[19] md:text-[24px]" />
             </div>
             {/* search icon end */}
+
+            {/* search input start */}
+            {showSearch && (
+              <form onSubmit={handleSearchInput}>
+                <input
+                  placeholder="Search"
+                  type="text"
+                  value={input}
+                  className="border px-2 rounded-md focus:outline-none"
+                  onChange={(e) => setInput(e.target.value)}
+                />
+                <button type="submit" />
+              </form>
+            )}
+            {/* search input end */}
 
             {/* cart icon start */}
             <Link href="/cart">
@@ -129,7 +157,7 @@ const Header = () => {
           </div>
         </Wrapper>
       </header>
-      {showSearch && <Search setShowSearch={setShowSearch} />}
+      {/* {showSearch && <Search setShowSearch={setShowSearch} />} */}
     </>
   );
 };

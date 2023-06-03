@@ -1,5 +1,4 @@
 import { getPercentageOff } from "@/utils/helper";
-import { apiUrl } from "@/utils/urls";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -16,7 +15,9 @@ const ProductCard = ({ data: { attributes } }) => {
         src={attributes?.thumbnail.data.attributes.url}
         alt={attributes?.name}
       />
-      <div className="text-lg font-medium">{attributes?.name}</div>
+      <div className="text-sm md:text-md lg:text-lg font-medium">
+        {attributes?.name}
+      </div>
       <div className="flex items-center text-black/[0.5]">
         <p className="mr-2 text-lg font-semibold">&#8377;{attributes.price}</p>
         {attributes.original_price && (

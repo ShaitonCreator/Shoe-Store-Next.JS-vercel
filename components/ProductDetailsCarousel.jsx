@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
-import { apiUrl } from "@/utils/urls";
 
 const ProductDetailsCarousel = ({ images }) => {
   return (
